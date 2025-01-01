@@ -28,10 +28,61 @@ llm_chain = LLMChain(prompt=prompt, llm=llm)
 
 # Create the Streamlit app
 def main():
+
+    css_dark_mode = """
+    <style>
+        body {
+            background-color: #121212;
+            color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            background: linear-gradient(90deg, #005c97, #363795);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .header h1 {
+            color: #ffffff;
+            font-size: 36px;
+        }
+        .header h2 {
+            color: #b0b0b0;
+            font-size: 22px;
+            font-family: Georgia, serif;
+        }
+        .stButton > button {
+            background-color: #20c997;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .stButton > button:hover {
+            background-color: #17a589;
+        }
+        .success-box {
+            background-color: #A1D6CB;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+    """
+    # Inject the custom CSS
+    st.markdown(css_dark_mode, unsafe_allow_html=True)
+
+    # Header Section
     html_temp = """
-    <div style="background-color: #33acff; padding: 15px; margin-bottom: 15px; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);">
-        <h1 style="color: #000000; text-align: center; font-family: Arial, sans-serif;">Dominious</h1>
-        <h2 style="color: #ffffff; text-align: center; font-family: Georgia, serif; font-size: 22px;">AI Based Domain Name Suggestion System</h2>
+    <div class="header">
+        <h1>Dominious</h1>
+        <h2>AI Based Domain Name Suggestion System</h2>
     </div>
     """
     st.markdown(html_temp, unsafe_allow_html=True)
@@ -48,7 +99,7 @@ def main():
         start_index = lines.index("Names:") + 1
         domain_names = [line.strip() for line in lines[start_index:] if line.strip()]
         for i in range(len(domain_names)):
-            st.success(domain_names[i])
+            st.markdown(f'<div class="success-box">{domain_names[i]}</div>', unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
